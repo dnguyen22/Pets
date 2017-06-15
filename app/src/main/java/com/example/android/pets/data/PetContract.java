@@ -35,14 +35,14 @@ public final class PetContract {
          *
          * Type: TEXT
          */
-        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_PET_NAME = "name";
 
         /**
          * Breed of the pet.
          *
          * Type: TEXT
          */
-        public static final String COLUMN_BREED = "breed";
+        public static final String COLUMN_PET_BREED = "breed";
 
         /**
          * Gender of the pet.
@@ -52,7 +52,7 @@ public final class PetContract {
          *
          * Type: INTEGER
          */
-        public static final String COLUMN_GENDER = "gender";
+        public static final String COLUMN_PET_GENDER = "gender";
 
         /**
          * Weight of the pet.
