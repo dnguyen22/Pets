@@ -2,6 +2,7 @@ package com.example.android.pets.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -21,6 +22,31 @@ public class PetProvider extends ContentProvider {
 
     /** Database helper that will provide us access to the database */
     private PetDbHelper mDbHelper;
+
+    /** URI matcher code corresponding to the content URI for the pets table */
+    private static final int PETS = 100;
+
+    /** URI matcher code corresponding to the content URI for a single entry in the pets table */
+    private static final int PET_ID = 101;
+
+    /**
+     * UriMatcher object to match a content URI to the corresponding integer code
+     * The input passed into the constructor represents the code to return for the root URI.
+     * It's common to use NO_MATCH as the input for this case.
+     */
+    private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+    // Static initializer. This is run the first time anything is called from this class.
+    static {
+        // The calls to addURI() go here, for all of the content URI patterns that the provider
+        // should recognize. All paths added to the UrirMatcher have a corresponding code to return
+        // when amatch is found.
+
+        // Add integer code for the pets table
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY, PetContract.PATH_PETS, PETS);
+        // Add integer code for a single entry in the pets table
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY, PetContract.PATH_PETS + "/#", PET_ID);
+    }
 
     /**
      * Initialize the provider and the database helper object.
