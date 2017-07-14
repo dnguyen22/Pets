@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.pets.data.PetContract.PetEntry;
@@ -33,6 +34,9 @@ import com.example.android.pets.data.PetContract.PetEntry;
  * Displays list of pets that were entered and stored in the app.
  */
 public class CatalogActivity extends AppCompatActivity {
+
+    /** Adapter for the list of pets */
+    private PetCursorAdapter mPetCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +81,19 @@ public class CatalogActivity extends AppCompatActivity {
                 null,                   // Selection arguments
                 null);                  // The sort order for the returned rows
 
-        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
+        // Find a reference to the {@link ListView} to populate
+        ListView lvItems = (ListView) findViewById(R.id.list_view_pet);
 
+        // Create a new adapter that takes an empty list of pets
+        mPetCursorAdapter = new PetCursorAdapter(this, cursor);
+
+        // Attach cursor adapter to the ListView
+        lvItems.setAdapter(mPetCursorAdapter);
+
+        /*
         try {
-            // Create aheader in the Text View that looks like this:
+
+            // Create a header in the Text View that looks like this:
             //
             // The pets table contains <number of rows in Cursor> pets.
             // _id - name - breed - gender - weight
@@ -102,8 +115,10 @@ public class CatalogActivity extends AppCompatActivity {
             int genderColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_GENDER);
             int weightColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_WEIGHT);
 
+
             // Iterate through all the returned rows in the cursor
             while (cursor.moveToNext()) {
+
                 // Use the index to extract the String or Int value of the word
                 // at the current row the cursor is on.
                 int currentId = cursor.getInt(idColumnIndex);
@@ -119,11 +134,13 @@ public class CatalogActivity extends AppCompatActivity {
                         currentGender + " - " +
                         currentWeight);
             }
+
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
             cursor.close();
         }
+        */
     }
 
     /**
